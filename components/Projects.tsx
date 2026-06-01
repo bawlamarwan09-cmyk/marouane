@@ -38,7 +38,7 @@ const projects: Project[] = [
     result: "No booking conflicts and a faster reservation process.",
     stack: ["Next.js", "PHP", "MySQL", "n8n"],
     demo: "#",
-    image: "/projects/hotel.png",
+    image: "https://ik.imagekit.io/latsqiyxk/New%20Folder/hotel.png",
     accent: "from-navy-700 to-blue-600",
   },
   {
@@ -51,7 +51,7 @@ const projects: Project[] = [
     result: "Better organization and automated tracking of members.",
     stack: ["React", "PHP", "MySQL"],
     demo: "https://rachidgym.vercel.app/",
-    image: "/projects/gym.png",
+    image: "https://ik.imagekit.io/latsqiyxk/New%20Folder/gym.png",
     accent: "from-blue-600 to-teal-500",
   },
   {
@@ -64,7 +64,7 @@ const projects: Project[] = [
     result: "Personalized guidance and smarter decision making.",
     stack: ["Next.js", "OpenAI API", "Node.js"],
     demo: "#",
-    image: "/projects/orient.png",
+    image: "https://ik.imagekit.io/latsqiyxk/New%20Folder/orient.png",
     accent: "from-teal-500 to-navy-700",
   },
   {
@@ -77,7 +77,7 @@ const projects: Project[] = [
     result: "Smooth event organization and a faster check-in process.",
     stack: ["Next.js", "APIs", "n8n", "MongoDB"],
     demo: "https://jawhara-theta.vercel.app/",
-    image: "/projects/event.png",
+    image: "https://ik.imagekit.io/latsqiyxk/New%20Folder/event.png",
     accent: "from-navy-700 to-teal-500",
   },
 ];
