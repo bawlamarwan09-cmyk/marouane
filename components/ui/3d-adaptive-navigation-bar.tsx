@@ -6,6 +6,7 @@ import { motion, useSpring, AnimatePresence } from "framer-motion";
 interface NavItem {
   label: string;
   id: string;
+  href?: string;
 }
 
 const defaultNavItems: NavItem[] = [
@@ -14,6 +15,7 @@ const defaultNavItems: NavItem[] = [
   { label: "Solutions", id: "solutions" },
   { label: "Projects", id: "projects" },
   { label: "Skills", id: "skills" },
+  { label: "Story", id: "story", href: "/story" },
   { label: "Contact", id: "contact" },
 ];
 
@@ -92,7 +94,8 @@ export const PillBase: React.FC<{ items?: NavItem[] }> = ({ items }) => {
     setHovering(false);
   };
 
-  const handleSectionClick = (sectionId: string) => {
+  const handleSectionClick = (item: NavItem) => {
+    const sectionId = item.id;
     // Trigger transition state
     setIsTransitioning(true);
     prevSectionRef.current = sectionId;
@@ -100,6 +103,12 @@ export const PillBase: React.FC<{ items?: NavItem[] }> = ({ items }) => {
 
     // Collapse the pill after selection
     setHovering(false);
+
+    // Route navigation (e.g. /story)
+    if (item.href) {
+      window.location.href = item.href;
+      return;
+    }
 
     // Actually navigate
     if (sectionId === "home") {
@@ -373,7 +382,7 @@ export const PillBase: React.FC<{ items?: NavItem[] }> = ({ items }) => {
                     duration: 0.25,
                     ease: "easeOut",
                   }}
-                  onClick={() => handleSectionClick(item.id)}
+                  onClick={() => handleSectionClick(item)}
                   className="relative cursor-pointer transition-all duration-200"
                   style={{
                     fontSize: isActive ? "15.5px" : "15px",
