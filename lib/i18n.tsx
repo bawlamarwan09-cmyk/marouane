@@ -229,7 +229,7 @@ const en = {
   },
 } as const;
 
-const fr: typeof en = {
+const fr = {
   nav: {
     home: "Accueil",
     about: "À propos",
@@ -442,11 +442,11 @@ const fr: typeof en = {
     ],
     cta: "Démarrer un projet",
   },
-};
+} as const;
 
 const dictionaries = { en, fr };
 
-export type Dictionary = typeof en;
+export type Dictionary = typeof en | typeof fr;
 
 /* ------------------------------------------------------------------ */
 /*  Context                                                            */
