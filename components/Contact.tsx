@@ -15,6 +15,7 @@ export default function Contact() {
     name: "",
     email: "",
     message: "",
+    company: "", // honeypot — must stay empty
   });
   const [sent, setSent] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
