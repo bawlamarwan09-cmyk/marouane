@@ -4,16 +4,17 @@ import { useState, FormEvent } from "react";
 import { Mail, MessageCircle, Send, CheckCircle2 } from "lucide-react";
 import Reveal from "./Reveal";
 import { WatchingCloud } from "@/components/ui/cloud-watch-form";
+import { useLanguage } from "@/lib/i18n";
 
-const EMAIL = "marouane.baoulla@example.com";
-const WHATSAPP = "212600000000"; // international format without "+"
+const EMAIL = "marouanebaoulla@gmail.com";
+const WHATSAPP = "212762659666"; // international format without "+"
 
 export default function Contact() {
+  const { t } = useLanguage();
   const [form, setForm] = useState({
     name: "",
     email: "",
     message: "",
-    company: "", // honeypot — must stay empty
   });
   const [sent, setSent] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -32,12 +33,12 @@ export default function Contact() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(data?.error || "Failed to send message.");
+        throw new Error(data?.error || t.contact.errorGeneric);
       }
       setSent(true);
       setForm({ name: "", email: "", message: "", company: "" });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setError(err instanceof Error ? err.message : t.contact.errorGeneric);
     } finally {
       setLoading(false);
     }
@@ -53,11 +54,10 @@ export default function Contact() {
               <div className="pointer-events-none absolute inset-0 bg-dotted opacity-15" />
               <div className="relative">
                 <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                  Let&apos;s build something that works
+                  {t.contact.heading}
                 </h2>
                 <p className="mt-4 max-w-md text-base leading-relaxed text-white/85">
-                  Tell me about your project or the process you want to
-                  automate. I&apos;ll get back to you quickly.
+                  {t.contact.intro}
                 </p>
 
                 <div className="mt-10 space-y-3">
@@ -69,7 +69,7 @@ export default function Contact() {
                       <Mail size={20} />
                     </span>
                     <div>
-                      <div className="text-xs font-medium text-white/70">Email</div>
+                      <div className="text-xs font-medium text-white/70">{t.contact.emailLabel}</div>
                       <div className="text-sm font-semibold">{EMAIL}</div>
                     </div>
                   </a>
@@ -85,10 +85,10 @@ export default function Contact() {
                     </span>
                     <div>
                       <div className="text-xs font-medium text-white/70">
-                        WhatsApp
+                        {t.contact.whatsapp}
                       </div>
                       <div className="text-sm font-semibold">
-                        Chat with me directly
+                        {t.contact.whatsappSub}
                       </div>
                     </div>
                   </a>
@@ -109,17 +109,16 @@ export default function Contact() {
                       <CheckCircle2 size={28} />
                     </span>
                     <h3 className="mt-5 text-xl font-semibold text-slate-900">
-                      Message sent!
+                      {t.contact.sentTitle}
                     </h3>
                     <p className="mt-2 text-sm text-slate-600">
-                      Thanks for reaching out. I&apos;ll get back to you as
-                      soon as I can.
+                      {t.contact.sentDesc}
                     </p>
                     <button
                       onClick={() => setSent(false)}
                       className="mt-6 text-sm font-semibold text-navy-700 hover:underline"
                     >
-                      Send another message
+                      {t.contact.sendAnother}
                     </button>
                   </div>
                 ) : (
@@ -144,7 +143,7 @@ export default function Contact() {
                         htmlFor="name"
                         className="mb-1.5 block text-sm font-medium text-slate-700"
                       >
-                        Name
+                        {t.contact.name}
                       </label>
                       <input
                         id="name"
@@ -153,7 +152,7 @@ export default function Contact() {
                         onChange={(e) =>
                           setForm({ ...form, name: e.target.value })
                         }
-                        placeholder="Your name"
+                        placeholder={t.contact.namePlaceholder}
                         maxLength={100}
                         className="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-navy-700 focus:bg-white focus:ring-4 focus:ring-navy-700/10"
                       />
@@ -164,7 +163,7 @@ export default function Contact() {
                         htmlFor="email"
                         className="mb-1.5 block text-sm font-medium text-slate-700"
                       >
-                        Email
+                        {t.contact.email}
                       </label>
                       <input
                         id="email"
@@ -174,7 +173,7 @@ export default function Contact() {
                         onChange={(e) =>
                           setForm({ ...form, email: e.target.value })
                         }
-                        placeholder="you@company.com"
+                        placeholder={t.contact.emailPlaceholder}
                         maxLength={200}
                         className="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-navy-700 focus:bg-white focus:ring-4 focus:ring-navy-700/10"
                       />
@@ -185,7 +184,7 @@ export default function Contact() {
                         htmlFor="message"
                         className="mb-1.5 block text-sm font-medium text-slate-700"
                       >
-                        Message
+                        {t.contact.message}
                       </label>
                       <textarea
                         id="message"
@@ -195,7 +194,7 @@ export default function Contact() {
                         onChange={(e) =>
                           setForm({ ...form, message: e.target.value })
                         }
-                        placeholder="Tell me about your project..."
+                        placeholder={t.contact.messagePlaceholder}
                         maxLength={5000}
                         onFocus={() => setIsTyping(true)}
                         onBlur={() => setIsTyping(false)}
@@ -217,7 +216,7 @@ export default function Contact() {
                       disabled={loading}
                       className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-navy-700 px-6 py-3.5 text-sm font-semibold text-white shadow-card transition-all duration-300 hover:bg-navy-800 hover:shadow-glow disabled:cursor-not-allowed disabled:opacity-70"
                     >
-                      {loading ? "Sending…" : "Send Message"}
+                      {loading ? t.contact.sending : t.contact.send}
                       {!loading && (
                         <Send
                           size={17}

@@ -12,68 +12,15 @@ import {
 } from "lucide-react";
 import Reveal from "./Reveal";
 import ScrollStackCards, { type StackCard } from "@/components/ui/scroll-card";
+import { useLanguage } from "@/lib/i18n";
 
-type Service = {
-  icon: typeof Workflow;
-  title: string;
-  desc: string;
-  points: string[];
-  accent: string;
-};
-
-const services: Service[] = [
-  {
-    icon: MonitorSmartphone,
-    title: "Business Websites That Convert",
-    desc: "High-performance websites engineered to turn visitors into customers — fast, polished, and built to grow your revenue.",
-    points: ["Conversion-focused UX", "Lightning-fast performance"],
-    accent: "from-navy-700 to-blue-600",
-  },
-  {
-    icon: Workflow,
-    title: "Workflow Automation",
-    desc: "I eliminate repetitive manual work with reliable n8n & API automations so your team can focus on what actually drives growth.",
-    points: ["Save 20+ hours / month", "Zero manual errors"],
-    accent: "from-blue-600 to-teal-500",
-  },
-  {
-    icon: Sparkles,
-    title: "AI-Powered Solutions",
-    desc: "From smart assistants to intelligent automations, I integrate AI that cuts costs and unlocks new efficiency across your business.",
-    points: ["Reduce operating costs", "Smarter decisions, faster"],
-    accent: "from-teal-500 to-navy-700",
-  },
+const serviceIcons = [MonitorSmartphone, Workflow, Sparkles];
+const serviceAccents = [
+  "from-navy-700 to-blue-600",
+  "from-blue-600 to-teal-500",
+  "from-teal-500 to-navy-700",
 ];
-
-const stats = [
-  { value: "20+", label: "Projects delivered" },
-  { value: "100%", label: "Tailored custom solutions" },
-  { value: "20h+", label: "Saved monthly via automation" },
-  { value: "5★", label: "Client satisfaction" },
-];
-
-const reasons = [
-  {
-    icon: Target,
-    title: "Problem-Solving Mindset",
-    desc: "I start with your business challenge, not the tech. Every solution is designed to remove a real bottleneck.",
-  },
-  {
-    icon: Briefcase,
-    title: "Business-First Approach",
-    desc: "I speak outcomes — revenue, time saved, and efficiency — not jargon. Your goals drive every decision.",
-  },
-  {
-    icon: LineChart,
-    title: "Focus on Measurable Results",
-    desc: "Faster processes, lower costs, higher conversions. I build for impact you can actually measure.",
-  },
-  {
-    icon: Handshake,
-    title: "Long-Term Partnerships",
-    desc: "I'm a reliable partner invested in your growth — supporting and scaling your systems well beyond launch.",
-  },
-];
+const reasonIcons = [Target, Briefcase, LineChart, Handshake];
 
 const reasonAccents = [
   "from-navy-700 to-blue-600",
@@ -83,12 +30,21 @@ const reasonAccents = [
 ];
 
 export default function About() {
-  const reasonCards: StackCard[] = reasons.map((r, i) => ({
-    title: r.title,
-    description: r.desc,
-    icon: <r.icon size={22} />,
-    accent: reasonAccents[i % reasonAccents.length],
+  const { t } = useLanguage();
+  const services = t.about.services.map((s, i) => ({
+    ...s,
+    icon: serviceIcons[i],
+    accent: serviceAccents[i],
   }));
+  const reasonCards: StackCard[] = t.about.reasons.map((r, i) => {
+    const Icon = reasonIcons[i];
+    return {
+      title: r.title,
+      description: r.desc,
+      icon: <Icon size={22} />,
+      accent: reasonAccents[i % reasonAccents.length],
+    };
+  });
 
   return (
     <>
@@ -106,18 +62,15 @@ export default function About() {
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-navy-700 shadow-soft backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-teal-500" />
-              What I do
+              {t.about.badge}
             </span>
             <h2 className="mt-5 text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl md:text-[2.75rem]">
-              I build digital solutions that{" "}
-              <span className="text-gradient">save time, reduce costs,</span> and
-              help businesses grow.
+              {t.about.headingPre}{" "}
+              <span className="text-gradient">{t.about.headingHi}</span>{" "}
+              {t.about.headingPost}
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-slate-600">
-              I partner with business owners and startups to replace slow,
-              manual processes with fast websites, smart automations, and
-              AI-driven systems — so you can scale with less effort and stronger
-              results.
+              {t.about.intro}
             </p>
           </div>
         </Reveal>
@@ -164,7 +117,7 @@ export default function About() {
           <div className="relative mt-16 overflow-hidden rounded-[1.75rem] border border-white/40 bg-accent-gradient p-8 shadow-glow md:p-10">
             <div className="pointer-events-none absolute inset-0 bg-dotted opacity-15" />
             <div className="relative grid grid-cols-2 gap-8 md:grid-cols-4">
-              {stats.map((stat) => (
+              {t.about.stats.map((stat) => (
                 <div key={stat.label} className="text-center md:text-left">
                   <div className="text-3xl font-bold text-white md:text-4xl">
                     {stat.value}
@@ -187,11 +140,11 @@ export default function About() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center lg:hidden">
             <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-              Why work with <span className="text-gradient">me</span>
+              {t.about.whyHeadingPre}{" "}
+              <span className="text-gradient">{t.about.whyHeadingHi}</span>
             </h3>
             <p className="mt-3 text-base leading-relaxed text-slate-600">
-              More than a developer — a results-driven partner focused on your
-              growth.
+              {t.about.whyDesc}
             </p>
           </div>
         </Reveal>
@@ -202,11 +155,11 @@ export default function About() {
         sideTitle={
           <div className="max-w-xs">
             <h3 className="text-4xl font-bold leading-tight tracking-tight text-slate-900">
-              Why work <span className="text-gradient">with me</span>
+              {t.about.whyHeadingPre}{" "}
+              <span className="text-gradient">{t.about.whyHeadingHi}</span>
             </h3>
             <p className="mt-4 text-base leading-relaxed text-slate-600">
-              More than a developer — a results-driven partner focused on your
-              growth.
+              {t.about.whyDesc}
             </p>
           </div>
         }
@@ -218,7 +171,7 @@ export default function About() {
             href="#contact"
             className="group inline-flex items-center justify-center gap-2 rounded-full bg-navy-700 px-7 py-3.5 text-sm font-semibold text-white shadow-card transition-all duration-300 hover:bg-navy-800 hover:shadow-glow"
           >
-            Let&apos;s grow your business
+            {t.about.cta}
             <ArrowRight
               size={18}
               className="transition-transform duration-300 group-hover:translate-x-1"

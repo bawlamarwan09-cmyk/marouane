@@ -10,8 +10,10 @@ import {
   useSpring,
 } from "framer-motion";
 import { ArrowRight, Mail, Code2, Workflow, Sparkles, CheckCircle2 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 export default function Hero() {
+  const { t } = useLanguage();
   const portraitRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: portraitRef,
@@ -68,7 +70,7 @@ export default function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-teal-500" />
             </span>
-            Available for freelance & contract work
+            {t.hero.available}
           </motion.div>
 
           <motion.h1
@@ -86,7 +88,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="mt-3 text-xl font-semibold text-gradient sm:text-2xl"
           >
-            Web Developer &amp; Automation Specialist
+            {t.hero.role}
           </motion.p>
 
           <motion.p
@@ -95,8 +97,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="mt-5 max-w-xl text-base leading-relaxed text-slate-600 sm:text-lg"
           >
-            I build fast, scalable web applications and automate business
-            workflows using AI and modern tools.
+            {t.hero.tagline}
           </motion.p>
 
           <motion.div
@@ -109,7 +110,7 @@ export default function Hero() {
               href="#projects"
               className="group inline-flex items-center justify-center gap-2 rounded-xl bg-navy-700 px-6 py-3.5 text-sm font-semibold text-white shadow-card transition-all duration-300 hover:bg-navy-800 hover:shadow-glow"
             >
-              View My Work
+              {t.hero.viewWork}
               <ArrowRight
                 size={18}
                 className="transition-transform duration-300 group-hover:translate-x-1"
@@ -120,7 +121,7 @@ export default function Hero() {
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-sm font-semibold text-slate-800 shadow-soft transition-all duration-300 hover:border-navy-700/30 hover:text-navy-700"
             >
               <Mail size={18} />
-              Contact Me
+              {t.hero.contactMe}
             </a>
           </motion.div>
 
@@ -130,11 +131,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-slate-200/70 pt-8"
           >
-            {[
-              { value: "20+", label: "Projects delivered" },
-              { value: "100%", label: "Workflow automation" },
-              { value: "5★", label: "Client satisfaction" },
-            ].map((s) => (
+            {t.hero.stats.map((s) => (
               <div key={s.label}>
                 <div className="text-2xl font-bold text-slate-900">{s.value}</div>
                 <div className="text-xs font-medium text-slate-500">{s.label}</div>
@@ -187,7 +184,7 @@ export default function Hero() {
             </span>
             <div>
               <div className="text-sm font-semibold text-slate-900">
-                Modern Web Apps
+                {t.hero.cardWeb}
               </div>
               <div className="text-xs text-slate-500">Next.js · React</div>
             </div>
@@ -204,7 +201,7 @@ export default function Hero() {
             </span>
             <div>
               <div className="text-sm font-semibold text-slate-900">
-                Automation
+                {t.hero.cardAuto}
               </div>
               <div className="text-xs text-slate-500">n8n · APIs</div>
             </div>
@@ -218,7 +215,7 @@ export default function Hero() {
           >
             <Sparkles size={16} className="text-navy-700" />
             <span className="text-xs font-semibold text-slate-700">
-              AI-powered integrations
+              {t.hero.chipAi}
             </span>
             <CheckCircle2 size={16} className="text-teal-500" />
           </motion.div>

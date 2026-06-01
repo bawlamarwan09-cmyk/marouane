@@ -13,41 +13,37 @@ import {
 } from "lucide-react";
 import Reveal from "./Reveal";
 import { TextRevealByWord } from "@/components/ui/text-reveal";
+import { useLanguage } from "@/lib/i18n";
 
-const problems = [
-  { icon: Clock, text: "Manual repetitive tasks", sub: "Hours lost on work that could run itself" },
-  { icon: TrendingDown, text: "Outdated, slow websites", sub: "Poor performance hurts trust and sales" },
-  { icon: Unplug, text: "No automation in workflows", sub: "Disconnected tools and manual hand-offs" },
-  { icon: UserMinus, text: "Loss of time and customers", sub: "Inefficiency quietly drains revenue" },
-];
-
-const solutions = [
-  { icon: Workflow, text: "Automated workflows", sub: "Reliable processes built with n8n & APIs" },
-  { icon: Rocket, text: "Fast modern web apps", sub: "Optimized, scalable Next.js applications" },
-  { icon: Bot, text: "AI-powered integrations", sub: "Smart features that save time daily" },
-  { icon: Gauge, text: "Business process optimization", sub: "Streamlined operations end to end" },
-];
+const problemIcons = [Clock, TrendingDown, Unplug, UserMinus];
+const solutionIcons = [Workflow, Rocket, Bot, Gauge];
 
 export default function ProblemSolution() {
+  const { t } = useLanguage();
+  const problems = t.problem.problems.map((p, i) => ({
+    ...p,
+    icon: problemIcons[i],
+  }));
+  const solutions = t.problem.solutions.map((s, i) => ({
+    ...s,
+    icon: solutionIcons[i],
+  }));
   return (
     <section id="solutions" className="relative bg-white py-10 md:py-14">
       <div className="pointer-events-none absolute inset-0 bg-dotted opacity-30 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
 
       {/* Scroll-driven word-by-word reveal */}
-      <TextRevealByWord
-        text="I turn slow, manual processes into fast websites and reliable automations that save time and grow your business."
-        className="relative"
-      />
+      <TextRevealByWord text={t.problem.reveal} className="relative" />
 
       <div className="container-px relative mx-auto max-w-7xl">
         <Reveal>
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-block rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-navy-700 shadow-soft">
-              Problem → Solution
+              {t.problem.badge}
             </span>
             <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              I turn business friction into{" "}
-              <span className="text-gradient">working systems</span>
+              {t.problem.headingPre}{" "}
+              <span className="text-gradient">{t.problem.headingHi}</span>
             </h2>
           </div>
         </Reveal>
@@ -59,7 +55,7 @@ export default function ProblemSolution() {
               <div className="mb-5 flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
                 <h3 className="text-sm font-semibold uppercase tracking-wider text-rose-600">
-                  Client Problems
+                  {t.problem.problemsTitle}
                 </h3>
               </div>
               <div className="space-y-3">
@@ -97,7 +93,7 @@ export default function ProblemSolution() {
               <div className="mb-5 flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-teal-500" />
                 <h3 className="text-sm font-semibold uppercase tracking-wider text-teal-600">
-                  My Solutions
+                  {t.problem.solutionsTitle}
                 </h3>
               </div>
               <div className="space-y-3">

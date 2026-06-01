@@ -103,6 +103,26 @@ export async function POST(req: Request) {
       );
     }
 
+    // Fire-and-forget webhook (e.g. n8n) — never blocks the user response
+    const webhookUrl = process.env.CONTACT_WEBHOOK_URL;
+    if (webhookUrl) {
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          ip,
+          userAgent: req.headers.get("user-agent") || "",
+          submittedAt: new Date().toISOString(),
+          source: "portfolio-contact-form",
+        }),
+      }).catch((e) => {
+        console.error("[contact] webhook failed:", e);
+      });
+    }
+
     const { data, error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: TO_EMAIL,

@@ -1,6 +1,7 @@
 "use client";
 
 import Reveal from "./Reveal";
+import { useLanguage } from "@/lib/i18n";
 
 const skills = [
   "Next.js",
@@ -14,16 +15,19 @@ const skills = [
 ];
 
 export default function Skills() {
+  const { t } = useLanguage();
   return (
     <section id="skills" className="section-pad relative bg-white">
       <div className="container-px mx-auto max-w-5xl">
         <Reveal>
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-block rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-navy-700 shadow-soft">
-              Skills
+              {t.skills.badge}
             </span>
             <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              The <span className="text-gradient">stack</span> I build with
+              {t.skills.headingPre}{" "}
+              <span className="text-gradient">{t.skills.headingHi}</span>{" "}
+              {t.skills.headingPost}
             </h2>
           </div>
         </Reveal>

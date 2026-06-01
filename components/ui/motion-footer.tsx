@@ -4,8 +4,9 @@ import * as React from "react";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, ArrowUp, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, ArrowUp, Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n";
 
 // Register ScrollTrigger safely for React
 if (typeof window !== "undefined") {
@@ -218,6 +219,7 @@ const MarqueeItem = () => (
 );
 
 export function CinematicFooter() {
+  const { t } = useLanguage();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const giantTextRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -316,7 +318,7 @@ export function CinematicFooter() {
               ref={headingRef}
               className="text-5xl md:text-8xl font-black footer-text-glow tracking-tighter mb-12 text-center"
             >
-              Let&apos;s build something great.
+              {t.footer.headline}
             </h2>
 
             {/* Interactive Magnetic Pills Layout */}
@@ -329,7 +331,7 @@ export function CinematicFooter() {
                   className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group"
                 >
                   <Mail className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
-                  Start a project
+                  {t.footer.startProject}
                 </MagneticButton>
 
                 <MagneticButton
@@ -337,7 +339,7 @@ export function CinematicFooter() {
                   href="#projects"
                   className="footer-glass-pill px-10 py-5 rounded-full text-foreground font-bold text-sm md:text-base flex items-center gap-3 group"
                 >
-                  View my work
+                  {t.footer.viewWork}
                   <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
                 </MagneticButton>
               </div>
@@ -346,7 +348,7 @@ export function CinematicFooter() {
               <div className="flex flex-wrap justify-center gap-3 md:gap-6 w-full mt-2">
                 <MagneticButton
                   as="a"
-                  href="https://github.com"
+                  href="https://github.com/bawlamarwan09-cmyk"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground flex items-center gap-2"
@@ -356,7 +358,17 @@ export function CinematicFooter() {
                 </MagneticButton>
                 <MagneticButton
                   as="a"
-                  href="https://linkedin.com"
+                  href="https://www.instagram.com/marouane68e?igsh=MXc5dDQ2N3Nmazg5aQ=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground flex items-center gap-2"
+                >
+                  <Instagram className="w-4 h-4" />
+                  Instagram
+                </MagneticButton>
+                <MagneticButton
+                  as="a"
+                  href="https://www.linkedin.com/in/marouane-baoulla-447719339?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground flex items-center gap-2"
@@ -366,7 +378,7 @@ export function CinematicFooter() {
                 </MagneticButton>
                 <MagneticButton
                   as="a"
-                  href="mailto:marouane.baoulla@example.com"
+                  href="mailto:marouanebaoulla@gmail.com"
                   className="footer-glass-pill px-6 py-3 rounded-full text-muted-foreground font-medium text-xs md:text-sm hover:text-foreground flex items-center gap-2"
                 >
                   <Mail className="w-4 h-4" />
@@ -381,14 +393,14 @@ export function CinematicFooter() {
 
             {/* Copyright */}
             <div className="text-muted-foreground text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1">
-              © {new Date().getFullYear()} Marouane Baoulla. All rights reserved.
+              © {new Date().getFullYear()} Marouane Baoulla. {t.footer.rights}
             </div>
 
             {/* "Made with Love" Badge */}
             <div className="footer-glass-pill px-6 py-3 rounded-full flex items-center gap-2 order-1 md:order-2 cursor-default border-border/50">
-              <span className="text-muted-foreground text-[10px] md:text-xs font-bold uppercase tracking-widest">Crafted with</span>
+              <span className="text-muted-foreground text-[10px] md:text-xs font-bold uppercase tracking-widest">{t.footer.crafted}</span>
               <span className="animate-footer-heartbeat text-sm md:text-base text-destructive">❤</span>
-              <span className="text-muted-foreground text-[10px] md:text-xs font-bold uppercase tracking-widest">by</span>
+              <span className="text-muted-foreground text-[10px] md:text-xs font-bold uppercase tracking-widest">{t.footer.by}</span>
               <span className="text-foreground font-black text-xs md:text-sm tracking-normal ml-1">Marouane</span>
             </div>
 

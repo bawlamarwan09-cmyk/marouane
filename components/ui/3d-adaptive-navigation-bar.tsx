@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useSpring, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/lib/i18n";
 
 interface NavItem {
   label: string;
@@ -9,23 +10,22 @@ interface NavItem {
   href?: string;
 }
 
-const defaultNavItems: NavItem[] = [
-  { label: "Home", id: "home" },
-  { label: "About", id: "about" },
-  { label: "Solutions", id: "solutions" },
-  { label: "Projects", id: "projects" },
-  { label: "Skills", id: "skills" },
-  { label: "Story", id: "story", href: "/story" },
-  { label: "Contact", id: "contact" },
-];
-
 /**
  * 3D Adaptive Navigation Pill
  * Smart navigation with hover expansion. Click-based navigation that
  * smooth-scrolls to the matching section, with scroll-spy active state.
  */
 export const PillBase: React.FC<{ items?: NavItem[] }> = ({ items }) => {
-  const navItems = items ?? defaultNavItems;
+  const { t } = useLanguage();
+  const navItems: NavItem[] =
+    items ?? [
+      { label: t.nav.home, id: "home" },
+      { label: t.nav.about, id: "about" },
+      { label: t.nav.solutions, id: "solutions" },
+      { label: t.nav.projects, id: "projects" },
+      { label: t.nav.skills, id: "skills" },
+      { label: t.nav.contact, id: "contact" },
+    ];
 
   const [activeSection, setActiveSection] = useState(navItems[0]?.id ?? "home");
   const [expanded, setExpanded] = useState(false);

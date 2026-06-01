@@ -6,6 +6,7 @@ import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
 import { CinematicFooter } from "@/components/ui/motion-footer";
 import { PillBase } from "@/components/ui/3d-adaptive-navigation-bar";
+import LanguageToggle from "@/components/ui/language-toggle";
 
 export default function Home() {
   return (
@@ -13,6 +14,11 @@ export default function Home() {
       {/* 3D adaptive floating navigation pill */}
       <div className="fixed left-1/2 top-5 z-50 -translate-x-1/2">
         <PillBase />
+      </div>
+
+      {/* Language switch */}
+      <div className="fixed right-4 top-5 z-50 sm:right-6">
+        <LanguageToggle />
       </div>
 
       {/* Scrolling content sits above the fixed footer (curtain reveal) */}

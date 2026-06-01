@@ -12,7 +12,7 @@ import {
   X,
 } from "lucide-react";
 import Reveal from "./Reveal";
-import { ImageAutoSlider } from "@/components/ui/image-auto-slider";
+import { useLanguage } from "@/lib/i18n";
 
 type Project = {
   icon: typeof CalendarCheck;
@@ -27,15 +27,10 @@ type Project = {
   accent: string;
 };
 
-const projects: Project[] = [
+/** Language-independent project data (icon, links, image, stack). */
+const projectMeta = [
   {
     icon: CalendarCheck,
-    name: "Hotel Reservation System",
-    tagline: "Automated bookings with real-time availability.",
-    problem: "Manual booking system causing double reservations and confusion.",
-    solution:
-      "Automated hotel reservation system with real-time availability control, admin dashboard, and email confirmation.",
-    result: "No booking conflicts and a faster reservation process.",
     stack: ["Next.js", "PHP", "MySQL", "n8n"],
     demo: "#",
     image: "https://ik.imagekit.io/latsqiyxk/New%20Folder/hotel.png",
@@ -43,12 +38,6 @@ const projects: Project[] = [
   },
   {
     icon: Dumbbell,
-    name: "Sports Hall Management System",
-    tagline: "Members, subscriptions & attendance in one place.",
-    problem: "Gym/sports hall had no structured system to manage members and subscriptions.",
-    solution:
-      "Full management system for members, subscriptions, attendance tracking, and an admin dashboard.",
-    result: "Better organization and automated tracking of members.",
     stack: ["React", "PHP", "MySQL"],
     demo: "https://rachidgym.vercel.app/",
     image: "https://ik.imagekit.io/latsqiyxk/New%20Folder/gym.png",
@@ -56,12 +45,6 @@ const projects: Project[] = [
   },
   {
     icon: GraduationCap,
-    name: "Orient AI Platform",
-    tagline: "AI-powered study & career guidance.",
-    problem: "Users struggle to get guidance on what to study or which career path to choose.",
-    solution:
-      "AI-powered platform that analyzes the user profile and suggests study paths, careers, and recommendations.",
-    result: "Personalized guidance and smarter decision making.",
     stack: ["Next.js", "OpenAI API", "Node.js"],
     demo: "#",
     image: "https://ik.imagekit.io/latsqiyxk/New%20Folder/orient.png",
@@ -69,12 +52,6 @@ const projects: Project[] = [
   },
   {
     icon: Ticket,
-    name: "Event Management System",
-    tagline: "Registrations, QR check-in & notifications.",
-    problem: "Manual event organization with messy registrations and no automation.",
-    solution:
-      "Event platform with a registration system, QR check-in, and automated notifications.",
-    result: "Smooth event organization and a faster check-in process.",
     stack: ["Next.js", "APIs", "n8n", "MongoDB"],
     demo: "https://jawhara-theta.vercel.app/",
     image: "https://ik.imagekit.io/latsqiyxk/New%20Folder/event.png",
@@ -113,6 +90,11 @@ function ProjectThumb({ project }: { project: Project }) {
 }
 
 export default function Projects() {
+  const { t } = useLanguage();
+  const projects: Project[] = projectMeta.map((m, i) => ({
+    ...m,
+    ...t.projects.items[i],
+  }));
   const [active, setActive] = useState<Project | null>(null);
 
   useEffect(() => {
@@ -126,52 +108,53 @@ export default function Projects() {
     };
   }, [active]);
 
-  const slides = projects.map((p) => (
-    <button
-      key={p.name}
-      type="button"
-      onClick={() => setActive(p)}
-      aria-label={`View details for ${p.name}`}
-      className="group/slide relative block h-60 w-80 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card transition-shadow duration-300 hover:shadow-glow md:h-72 md:w-[26rem]"
-    >
-      <div className="h-full w-full transition-transform duration-500 group-hover/slide:scale-105">
-        <ProjectThumb project={p} />
-      </div>
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-900/90 via-navy-900/35 to-transparent p-5 text-left">
-        <h3 className="text-base font-semibold text-white">{p.name}</h3>
-        <p className="mt-1 text-xs leading-relaxed text-white/80">{p.tagline}</p>
-      </div>
-      <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-navy-700 opacity-0 shadow-card backdrop-blur transition-opacity duration-300 group-hover/slide:opacity-100">
-        <Maximize2 size={13} />
-        View details
-      </span>
-    </button>
-  ));
-
   return (
     <section id="projects" className="section-pad relative">
       <div className="container-px mx-auto max-w-7xl">
         <Reveal>
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-block rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-navy-700 shadow-soft">
-              Projects
+              {t.projects.badge}
             </span>
             <h2 className="mt-5 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Real solutions, <span className="text-gradient">real results</span>
+              {t.projects.headingPre}{" "}
+              <span className="text-gradient">{t.projects.headingHi}</span>
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-slate-600">
-              A selection of systems built to solve concrete business problems.
+              {t.projects.intro}
               <span className="mt-1 block text-sm text-slate-500">
-                Hover to pause · click any project for full details.
+                {t.projects.hint}
               </span>
             </p>
           </div>
         </Reveal>
       </div>
 
-      {/* Auto-scrolling project slider (full width) */}
+      {/* Manually scrollable project rail (swipe / drag / scroll) */}
       <div className="mt-14">
-        <ImageAutoSlider slides={slides} speed={38} />
+        <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:px-[max(1.5rem,calc((100vw-80rem)/2))]">
+          {projects.map((p) => (
+            <button
+              key={p.name}
+              type="button"
+              onClick={() => setActive(p)}
+              aria-label={`${t.projects.viewDetails} — ${p.name}`}
+              className="group/slide relative block h-60 w-80 shrink-0 snap-center overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card transition-shadow duration-300 hover:shadow-glow md:h-72 md:w-[26rem]"
+            >
+              <div className="h-full w-full transition-transform duration-500 group-hover/slide:scale-105">
+                <ProjectThumb project={p} />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-900/90 via-navy-900/35 to-transparent p-5 text-left">
+                <h3 className="text-base font-semibold text-white">{p.name}</h3>
+                <p className="mt-1 text-xs leading-relaxed text-white/80">{p.tagline}</p>
+              </div>
+              <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-navy-700 opacity-0 shadow-card backdrop-blur transition-opacity duration-300 group-hover/slide:opacity-100">
+                <Maximize2 size={13} />
+                {t.projects.viewDetails}
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Project detail modal */}
@@ -218,7 +201,7 @@ export default function Projects() {
                 <div className="mt-6 space-y-4 text-sm">
                   <div>
                     <span className="text-xs font-semibold uppercase tracking-wider text-rose-500">
-                      Problem
+                      {t.projects.problem}
                     </span>
                     <p className="mt-1 leading-relaxed text-slate-600">
                       {active.problem}
@@ -226,7 +209,7 @@ export default function Projects() {
                   </div>
                   <div>
                     <span className="text-xs font-semibold uppercase tracking-wider text-navy-700">
-                      Solution
+                      {t.projects.solution}
                     </span>
                     <p className="mt-1 leading-relaxed text-slate-600">
                       {active.solution}
@@ -234,7 +217,7 @@ export default function Projects() {
                   </div>
                   <div>
                     <span className="text-xs font-semibold uppercase tracking-wider text-teal-600">
-                      Result
+                      {t.projects.result}
                     </span>
                     <p className="mt-1 leading-relaxed text-slate-600">
                       {active.result}
@@ -243,12 +226,12 @@ export default function Projects() {
                 </div>
 
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {active.stack.map((t) => (
+                  {active.stack.map((tech) => (
                     <span
-                      key={t}
+                      key={tech}
                       className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600"
                     >
-                      {t}
+                      {tech}
                     </span>
                   ))}
                 </div>
@@ -259,7 +242,7 @@ export default function Projects() {
                   rel="noopener noreferrer"
                   className="group/btn mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent-gradient px-5 py-3 text-sm font-semibold text-white shadow-card transition-all duration-300 hover:shadow-glow"
                 >
-                  View Live Demo
+                  {t.projects.viewDemo}
                   <ExternalLink
                     size={16}
                     className="transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"

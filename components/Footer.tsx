@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail ,Instagram} from "lucide-react";
 
 const nav = [
   { label: "About", href: "#about" },
@@ -42,9 +42,10 @@ export default function Footer() {
 
         <div className="flex items-center gap-2">
           {[
-            { icon: Github, href: "https://github.com", label: "GitHub" },
-            { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-            { icon: Mail, href: "mailto:marouane.baoulla@example.com", label: "Email" },
+            { icon: Github, href: "https://github.com/bawlamarwan09-cmyk", label: "GitHub" },
+            { icon: Instagram, href: "https://www.instagram.com/marouane68e?igsh=MXc5dDQ2N3Nmazg5aQ==", label: "instagram" },
+            { icon: Linkedin, href: "https://www.linkedin.com/in/marouane-baoulla-447719339?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app", label: "LinkedIn" },
+            { icon: Mail, href: "mailto:marouanebaoulla@gmail.com", label: "Email" },
           ].map((s) => (
             <a
               key={s.label}
