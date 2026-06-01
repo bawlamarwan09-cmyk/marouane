@@ -4,12 +4,22 @@ import { Resend } from "resend";
 export const runtime = "nodejs";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+export async function POST(req: Request) {
+  const apiKey = process.env.RESEND_API_KEY;
 
-const TO_EMAIL = process.env.example.CONTACT_TO_EMAIL || "marouanebaoulla@gmail.com";
-// Use your verified Resend domain in production, e.g. "Marouane <hello@your-domain.com>"
+  if (!apiKey) {
+    return NextResponse.json(
+      { error: "Missing RESEND_API_KEY" },
+      { status: 500 }
+    );
+  }
+
+  const resend = new Resend(apiKey);
+const TO_EMAIL =
+  process.env.CONTACT_TO_EMAIL || "marouanebaoulla@gmail.com";
+
 const FROM_EMAIL =
-  process.env.example.CONTACT_FROM_EMAIL || "Portfolio <onboarding@resend.dev>";
-
+  process.env.CONTACT_FROM_EMAIL || "Portfolio <onboarding@resend.dev>";
 function escapeHtml(s: string) {
   return s
     .replace(/&/g, "&amp;")
