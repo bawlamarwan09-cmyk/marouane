@@ -165,7 +165,7 @@ export default function Hero() {
             >
               <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem]">
                 <Image
-                  src="/marouane.png"
+                  src="https://ik.imagekit.io/latsqiyxk/New%20Folder/marouane.png"
                   alt="Marouane Baoulla"
                   fill
                   priority
