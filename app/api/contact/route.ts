@@ -5,10 +5,10 @@ export const runtime = "nodejs";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const TO_EMAIL = process.env.CONTACT_TO_EMAIL || "marouane.baoulla@example.com";
+const TO_EMAIL = process.env.example.CONTACT_TO_EMAIL || "marouanebaoulla@gmail.com";
 // Use your verified Resend domain in production, e.g. "Marouane <hello@your-domain.com>"
 const FROM_EMAIL =
-  process.env.CONTACT_FROM_EMAIL || "Portfolio <onboarding@resend.dev>";
+  process.env.example.CONTACT_FROM_EMAIL || "Portfolio <onboarding@resend.dev>";
 
 function escapeHtml(s: string) {
   return s
